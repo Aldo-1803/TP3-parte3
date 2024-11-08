@@ -1,0 +1,46 @@
+@startuml Builder
+package modelo {
+    class FlightBooking {
+        - asiento : String
+        - equipaje : int
+        - comida : String
+        - servicesPremium : boolean
+        + getAsiento() : String
+        + getEquipaje() : int
+        + getComida() : String
+        + hasServicesPremium() : boolean
+        + toString() : String
+        - FlightBooking(asiento : String, equipaje : int, comida : String, servicesPremium : boolean)
+    }
+
+    class Builder {
+        - asiento : String
+        - equipaje : int
+        - comida : String
+        - servicesPremium : boolean
+        + setAsiento(asiento : String) : Builder
+        + setEquipaje(equipaje : int) : Builder
+        + setComida(comida : String) : Builder
+        + serviciosPremium(servicesPremium : boolean) : Builder
+        + build() : FlightBooking
+    }
+
+    interface FlightBookingBuilderInterface {
+        + setAsiento(asiento : String) : FlightBookingBuilderInterface
+        + setEquipaje(equipaje : int) : FlightBookingBuilderInterface
+        + setComida(comida : String) : FlightBookingBuilderInterface
+        + serviciosPremium(servicesPremium : boolean) : FlightBookingBuilderInterface
+        + build() : FlightBooking
+    }
+
+    class FlightBookingDirector {
+        + constructBasicBooking(builder : FlightBookingBuilderInterface) : FlightBooking
+        + constructPremiumBooking(builder : FlightBookingBuilderInterface) : FlightBooking
+    }
+}
+
+FlightBooking <.. Builder : "builds"
+Builder ..|> FlightBookingBuilderInterface
+FlightBookingDirector ..> FlightBookingBuilderInterface : "uses"
+@enduml
+

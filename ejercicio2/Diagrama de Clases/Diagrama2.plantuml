@@ -1,0 +1,49 @@
+@startuml FactoryMethod
+package modelo {
+    interface Payment {
+        + processPayment(amount : float)
+    }
+
+    abstract class PaymentFactory {
+        + createPayment() : Payment
+    }
+
+    class BankTransferPayment implements Payment {
+        + processPayment(amount : float)
+        - validarMonto(amount : float) : boolean
+        - realizarTransferencia(amount : float)
+    }
+
+    class BankTransferPaymentFactory extends PaymentFactory {
+        + createPayment() : Payment
+    }
+
+    class CreditCardPayment implements Payment {
+        + processPayment(amount : float)
+    }
+
+    class CreditCardPaymentFactory extends PaymentFactory {
+        + createPayment() : Payment
+    }
+
+    class PayPalPayment implements Payment {
+        + processPayment(amount : float)
+    }
+
+    class PayPalPaymentFactory extends PaymentFactory {
+        + createPayment() : Payment
+    }
+}
+
+Payment <|.. BankTransferPayment
+Payment <|.. CreditCardPayment
+Payment <|.. PayPalPayment
+
+PaymentFactory <|-- BankTransferPaymentFactory
+PaymentFactory <|-- CreditCardPaymentFactory
+PaymentFactory <|-- PayPalPaymentFactory
+
+BankTransferPaymentFactory ..> BankTransferPayment : "creates"
+CreditCardPaymentFactory ..> CreditCardPayment : "creates"
+PayPalPaymentFactory ..> PayPalPayment : "creates"
+@enduml

@@ -1,0 +1,23 @@
+@startuml Singleton
+package modelo {
+    class Logger {
+        - instance : Logger
+        - LOG_FILE : String
+        - Logger()
+        + getInstance() : Logger
+        + logInfo(mensaje : String)
+        + logWarning(mensaje : String)
+        + logError(mensaje : String)
+        - escribirLog(nivel : String, mensaje : String)
+        - obtenerMarcaDeTiempo() : String
+    }
+}
+
+class Main {
+    + main(args : String[])
+    - iniciarAplicacion()
+    - realizarOperaciones(logger : Logger)
+}
+
+Main --> Logger : "uses (Singleton instance)"
+@enduml
